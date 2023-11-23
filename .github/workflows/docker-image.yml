@@ -16,8 +16,8 @@ jobs:
     - name: Build app image
       run: docker build . --tag image
 
-    - name: Log into registry
-      run: echo "${{ secrets.REGISTRYPASSWORD }}" | docker login registry.nordix.org -u ${{ secrets.REGISTRYUSERNAME }} --password-stdin
+    # - name: Log into registry
+    #   run: echo "${{ secrets.REGISTRYPASSWORD }}" | docker login registry.nordix.org -u ${{ secrets.REGISTRYUSERNAME }} --password-stdin
 
     - name: Push app image
       id: image
