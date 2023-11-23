@@ -41,4 +41,4 @@ jobs:
         valueFile: 'manifests/base/deployment.yaml'
         propertyPath: 'spec.template.spec.containers[0].image'
         value: registry.nordix.org/eiffel/etos-suite-starter:${{ steps.image.outputs.version }}
-        commitChange: false
+        commitChange: true
