@@ -17,18 +17,18 @@ jobs:
       run: docker build . --tag image
 
     - name: Log into registry
-      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+      run: echo "${{ secrets.REGISTRYPASSWORD }}" | docker login registry.nordix.org -u ${{ secrets.REGISTRYUSERNAME }} --password-stdin
 
     - name: Push app image
       id: image
       run: |
-        IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$FILES_IMAGE_NAME
+        IMAGE_ID=registry.nordix.org/eiffel/${{ github.repository }}
         # Strip git ref prefix from version
         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
         # Strip "v" prefix from tag name
         [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
         # Use Docker `latest` tag convention
-        [ "$VERSION" == "main" ] && VERSION=$(echo ${{ github.sha }} | cut -c1-8)
+        [ "$VERSION" == "master" ] && VERSION=$(echo ${{ github.sha }} | cut -c1-8)
         echo IMAGE_ID=$IMAGE_ID
         echo VERSION=$VERSION
         docker tag image $IMAGE_ID:$VERSION
